@@ -7,6 +7,9 @@ require("dotenv").config();   //sensitive data
 var cors=require("cors");   //to request the backend
 const cookieParser = require("cookie-parser");
 const errorHandler=require("./middleware/error")
+
+const authRoutes=require("./routes/authRoutes");
+
 //database connection
 mongoose.connect(process.env.REACT_APP_DATABASE,{
     useNewUrlParser:true,
@@ -24,6 +27,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(cors());
+
+//ROUTES MIDDLEWARE
+app.use('/api', authRoutes);
 
 //error middleware
 app.use(errorHandler);

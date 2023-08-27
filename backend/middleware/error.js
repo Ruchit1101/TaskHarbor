@@ -1,6 +1,6 @@
 //whenever there is an error in the backend we will get to know about the kind of error and its type.
 const ErrorResponse=require("../utils/errorResponse");
-const errorHandler=(err, req, res)=>{
+const errorHandler=(err, req, res, next)=>{
   let error={...err};
   error.message = err.message;
   
@@ -18,7 +18,7 @@ const errorHandler=(err, req, res)=>{
     const message = Object.value(err.errors).map(val=>' '+ val.message);
     error = new ErrorResponse(message, 400);
   }
-  res.status(error.statusCode || 500).json({
+  res.status(error.codeStatus || 500).json({
     success:false,
     error:error.message || "server error"
   })
