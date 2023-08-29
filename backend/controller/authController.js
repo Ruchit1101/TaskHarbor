@@ -31,9 +31,33 @@ exports.signin=async(req, res, next)=>{
     if(!password){
         return next(new ErrorResponse("please add a password",403));
     }
+    const user = await User.findOne({emai});
+    if(!user){
+        return next(new ErrorResponse("Invalid credentials", 400));
     }
-    
+        //check password
+    const isMatched =await user.comparePassword(password);
+    if(!isMatched){
+        return next(new ErrorResponse("Invalid credentials", 400));
+    }
+    sendTokenResponse(user, 200, res);
+
+    }
     catch(error){
         next(error);
     }
+}
+
+const sendTokenResponse = async(user, codeStatus, res)=>{
+    const token= await user.getJwtToken();
+    res.status(codeStatus).cookie('token', token, {maxAge:10*60*1000, httpOnly:true}).json({success:true, token, user})
+}
+
+//logout function
+exports.logout =(req, res,next)=>{
+    res.clearCookie('token');
+    res.status(200).jso({
+        success:true,
+        message:"Logged Out"
+    })
 }
