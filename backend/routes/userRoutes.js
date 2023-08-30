@@ -1,5 +1,5 @@
 const express = require("express");
-const { allUsers } = require("../controller/userController");
+const { allUsers, singleUser, editUser, deleteUser } = require("../controller/userController");
 const { isAuthenticated, isAdmin } = require("../middleware/auth");
 const router = express.Router();
 
@@ -7,7 +7,11 @@ const router = express.Router();
 
 
 
-router.get('/me', isAuthenticated, isAdmin , allUsers);
+router.get('/allusers', isAuthenticated, isAdmin , allUsers);
+router.get('/user/:id', isAuthenticated, singleUser);
+router.put('/user/edit/:id', isAuthenticated, editUser);
+router.delete('/admin/user/delete/:id', isAuthenticated, isAdmin, deleteUser);
+
 module.exports=router;
 
 //21:55 L05
