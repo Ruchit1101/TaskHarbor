@@ -9,6 +9,8 @@ const cookieParser = require("cookie-parser");
 const errorHandler=require("./middleware/error")
 const authRoutes=require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const jobTypeRoutes= require("./routes/jobTypeRoutes");
+
 //database connection
 mongoose.connect(process.env.REACT_APP_DATABASE,{
     useNewUrlParser:true,
@@ -30,7 +32,7 @@ app.use(cors());
 //ROUTES MIDDLEWARE
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
-
+app.use('/api',jobTypeRoutes);
 //error middleware
 app.use(errorHandler);
 
