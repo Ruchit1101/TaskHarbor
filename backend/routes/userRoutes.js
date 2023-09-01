@@ -14,4 +14,3 @@ router.delete('/admin/user/delete/:id', isAuthenticated, isAdmin, deleteUser);
 
 module.exports=router;
 
-//21:55 L05
