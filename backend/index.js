@@ -10,7 +10,7 @@ const errorHandler=require("./middleware/error")
 const authRoutes=require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const jobTypeRoutes= require("./routes/jobTypeRoutes");
-
+const jobRoutes=require("./routes/jobRoutes")
 //database connection
 mongoose.connect(process.env.REACT_APP_DATABASE,{
     useNewUrlParser:true,
@@ -33,6 +33,8 @@ app.use(cors());
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api',jobTypeRoutes);
+app.use('/api',jobRoutes);
+
 //error middleware
 app.use(errorHandler);
 
@@ -44,3 +46,4 @@ const port = process.env.REACT_APP_PORT || 9000
 app.listen(port, ()=>{
     console.log(`Server running on port ${port}`);
 })
+
